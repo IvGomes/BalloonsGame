@@ -1,3 +1,15 @@
 body {
     font-family: Courier, monospace;
 }
+
+main .conteiner {
+    position: relative;
+}
+
+main ul.balloonList {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
