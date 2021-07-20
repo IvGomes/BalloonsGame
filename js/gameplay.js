@@ -3,31 +3,36 @@ const _TIMER_EASY = 120;
 const _TIMER_NORMAL = 60;
 const _TIMER_HARD = 30;
 //...quantidade de baloes
-const _N_BALLOONS = 10;
+const _N_BALLOONS = 30;
 let _N_BALLOONS_POW = 0;
 //...pega o id da dificuldade
 const _GAME_DIFICULTY = parseInt((window.location.search).replace('?', ''));
 //...pega local dos timers
 const _TIMER_INDICATOR = document.getElementsByClassName('timer');
+let countdown;
 
 window.onload = function (){
+    document.getElementsByClassName('forPop')[0].innerHTML = _N_BALLOONS;
     //...verifica a dificuldade e seta o timer
     if( _GAME_DIFICULTY === 1 ) {
 
         _TIMER_INDICATOR[0].innerHTML = _TIMER_EASY + ' segundos';
-        _TIMER_INDICATOR[1].innerHTML = _TIMER_EASY;
-        document.getElementsByClassName('forPop')[0].innerHTML = _N_BALLOONS;
+        regressCount(_TIMER_EASY);
+
+        //document.getElementsByClassName('forPop')[0].innerHTML = _N_BALLOONS;
 
     } else if ( _GAME_DIFICULTY === 2 ) {
 
         _TIMER_INDICATOR[0].innerHTML = _TIMER_NORMAL + ' segundos';
-        _TIMER_INDICATOR[1].innerHTML = _TIMER_NORMAL;
+        regressCount(_TIMER_NORMAL);
+        //document.getElementsByClassName('forPop')[0].innerHTML = _N_BALLOONS;
 
 
     } else if ( _GAME_DIFICULTY === 3 ) {
 
         _TIMER_INDICATOR[0].innerHTML = _TIMER_HARD + ' segundos';
-        _TIMER_INDICATOR[1].innerHTML = _TIMER_HARD;
+        regressCount(_TIMER_HARD);
+        //document.getElementsByClassName('forPop')[0].innerHTML = _N_BALLOONS;
 
     }
 
@@ -38,7 +43,7 @@ window.onload = function (){
     document.getElementsByClassName('popped')[0].innerHTML = _N_BALLOONS_POW;
 
     init();
-    addClickEvent();
+    addClickEvent('addEvent');
     
 }
 
@@ -55,15 +60,59 @@ function init() {
     }
 }
 
-function addClickEvent() {
+//contador regressivo
+function regressCount(cd) {
+
+    _TIMER_INDICATOR[1].innerHTML = cd;
+    countdown = setInterval(() => {
+        _TIMER_INDICATOR[1].innerHTML = --cd;
+        checkEndGame(cd);
+    }, 1000);
+    
+}
+
+function addClickEvent(status) {
     const _BALLOONS_NODE = document.querySelectorAll('.balloonList li');
 
-    for (let i = 0; i < _BALLOONS_NODE.length; i++) {
-        
-        _BALLOONS_NODE[i].addEventListener('click', function(){
-            let c = this.childNodes;
-            c[0].src = "../imagens/balao_azul_pequeno_estourado.png";
-        })
-        
+    if(status === 'addEvent') {
+        for (let i = 0; i < _BALLOONS_NODE.length; i++) {
+            _BALLOONS_NODE[i].addEventListener('click', powBalloons);
+        }
+    }
+
+    if(status === 'remEvent') {
+        for (let i = 0; i < _BALLOONS_NODE.length; i++) {
+            _BALLOONS_NODE[i].removeEventListener('click', powBalloons);
+        }
+    }
+}
+
+//funcao com conjunto de açoes no momento do estouro do balao
+function powBalloons() {
+    const c = this.childNodes;
+    
+    c[0].src = "../imagens/balao_azul_pequeno_estourado.png";
+    _N_BALLOONS_POW++;
+    document.getElementsByClassName('popped')[0].innerHTML = _N_BALLOONS_POW;
+
+    //remove evento de click do balao clicado
+    this.removeEventListener('click', powBalloons);
+
+    //verificar fim de jogo
+    checkEndGame();
+}
+
+//fim de jogo
+function checkEndGame(cd) {
+    if(_N_BALLOONS_POW === _N_BALLOONS) {
+        clearInterval(countdown);
+        alert('Ae! Você venceu!!!');
+    }
+
+    if (cd === 0) {
+        clearInterval(countdown);
+        console.log('Que pena... o tempo acabou!');
+
+        addClickEvent('remEvent');
     }
 }
