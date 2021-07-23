@@ -53,3 +53,32 @@ main h1 {
     font-weight: bolder;
 }
 
+.select-level {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.select-level input {
+    display: none;
+}
+
+.select-level label {
+    display: block;
+    width: 20rem;
+    background: #FFF;
+    margin: 1.5rem auto;
+    padding: .3rem 1rem;
+    border-radius: .3rem;
+    text-transform: uppercase;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 300ms;
+}
+
+.select-level input:checked + label {
+    width: 22rem;
+    color: #fff ;
+    background: crimson;
+    font-size: 2.2rem;
+    font-weight: bolder;
+}

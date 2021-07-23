@@ -13,12 +13,7 @@ window.onload = function(){
     };  
 }
 
-function startGamePlay() {
-    const _GAME_DIFICULTY = document.querySelector('#selectDificuly select').value;
-    
-    window.location.href = 'pages/gameplay.html?' + _GAME_DIFICULTY;
-}
-
+//acoes de dar play e pausar a musica no menu inicial
 function playPauseFunction(){
     const _AUDIO_TAG = document.getElementsByTagName('audio')[0];
     if(this.checked) {
@@ -27,3 +22,12 @@ function playPauseFunction(){
         _AUDIO_TAG.play();
     }
 }
+
+//passa parametro de dificuldade escolhida para a gameplay
+function startGamePlay() {
+    const _GAME_DIFICULTY = document.querySelector('.select-level input[name="setDif"]:checked').value;
+    
+    window.location.href = 'pages/gameplay.html?' + _GAME_DIFICULTY;
+}
+
+
