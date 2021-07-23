@@ -3,7 +3,7 @@ const _TIMER_EASY = 120;
 const _TIMER_NORMAL = 60;
 const _TIMER_HARD = 30;
 //...quantidade de baloes
-const _N_BALLOONS = 30;
+const _N_BALLOONS = 1;
 let _N_BALLOONS_POW = 0;
 //...pega o id da dificuldade
 const _GAME_DIFICULTY = parseInt((window.location.search).replace('?', ''));
@@ -91,9 +91,17 @@ function addClickEvent(status) {
 function powBalloons() {
     const c = this.childNodes;
     
+    //atualiza a imagem do elemento clicado
     c[0].src = "../imagens/balao_azul_pequeno_estourado.png";
+
+    //adiciona baloes estourados no contador
     _N_BALLOONS_POW++;
     document.getElementsByClassName('popped')[0].innerHTML = _N_BALLOONS_POW;
+    //remove do contador os baloes estourados
+    let _LEFT_FOR_POP = parseInt(document.getElementsByClassName('forPop')[0].innerHTML);
+    console.log(_LEFT_FOR_POP);
+    _LEFT_FOR_POP--;
+    document.getElementsByClassName('forPop')[0].innerHTML = _LEFT_FOR_POP;
 
     //remove evento de click do balao clicado
     this.removeEventListener('click', powBalloons);
@@ -102,17 +110,28 @@ function powBalloons() {
     checkEndGame();
 }
 
+function callEndGameModal(msg){
+    const _DOM_EL = document.getElementsByClassName('conteiner')[0];
+    const _MODAL_EL = document.createElement('span');
+    const _MODAL_EL2 = document.createElement('h1');
+    //const _MODAL_MSG = document.createTextNode(msg);
+    _MODAL_EL.appendChild(_MODAL_EL2);
+    _DOM_EL.appendChild(_MODAL_EL);
+    _MODAL_EL.innerHTML = msg;
+}
+
+
 //fim de jogo
 function checkEndGame(cd) {
+    
     if(_N_BALLOONS_POW === _N_BALLOONS) {
         clearInterval(countdown);
-        alert('Ae! Você venceu!!!');
+        callEndGameModal('VOCÊ VENCEU!');
     }
 
     if (cd === 0) {
         clearInterval(countdown);
-        console.log('Que pena... o tempo acabou!');
-
+        callEndGameModal('Que pena... o tempo acabou!');
         addClickEvent('remEvent');
     }
 }

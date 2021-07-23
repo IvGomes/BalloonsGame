@@ -6,29 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/index.css"/>
-    <script type="text/javascript" src="js/index.js"></script>
+    <script src="js/index.js"></script>
 
     <title>Baloon Pop</title>
 </head>
 <body>
-    <header id="topHead">
-        <h1 class="title">
-            Selecione a Dificuldade
-        </h1>
-    </header>
 
-    <section id="selectDificuly">
-        <select>
-            <option value="1">Fácil</option>
-            <option value="2">Normal</option>
-            <option value="3">Difícil</option>
-        </select>
-        <div class="starter">
-            <div>Aperte play para iniciar:</div>
-            <a class="startBtn" onclick="startGamePlay()" >
-                <img src="imagens/iniciar.png" />
-            </a>
-        </div>
-    </section>
+    <main>
+        <header id="topHead">
+            <h1 class="title">
+                Maniaco dos balões
+            </h1>
+        </header>
+
+        <section id="selectDificuly">
+            <h2>Selecione a Dificuldade</h2>
+            <select>
+                <option value="1">Fácil</option>
+                <option value="2">Normal</option>
+                <option value="3">Difícil</option>
+            </select>
+
+            <div class="starter">
+                <div>Aperte play para iniciar:</div>
+                <a class="startBtn" onclick="startGamePlay()" >
+                    <img src="imagens/iniciar.png" alt="imagem de um botão verde com ícone de play para iniciar o jogo"/>
+                </a>
+            </div>
+        </section>
+        <audio src="./audios/House-In-A-Forest-Loop.mp3" autoplay loop></audio>
+    </main>
+
+    <label id="musicSettings">
+        Desativar Música
+        <input id="playPause" type="checkbox">
+    </label>  
 </body>
 </html>
