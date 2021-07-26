@@ -3,7 +3,7 @@ const _TIMER_EASY = 120;
 const _TIMER_NORMAL = 60;
 const _TIMER_HARD = 30;
 //...quantidade de baloes
-const _N_BALLOONS = 1;
+const _N_BALLOONS = 30;
 let _N_BALLOONS_POW = 0;
 //...pega o id da dificuldade
 const _GAME_DIFICULTY = parseInt((window.location.search).replace('?', ''));
